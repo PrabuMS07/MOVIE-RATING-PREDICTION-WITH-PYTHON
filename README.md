@@ -1,93 +1,95 @@
 
-# 🎬 IMDb Movie Rating Prediction with Python (Jupyter Notebook) ⭐
 
-This project predicts the IMDb rating for movies using data from the included "IMDb Movies India.csv" dataset. The analysis and modeling are performed within a Jupyter Notebook (`Movie Rating Prediction with Python.ipynb`) using Python and libraries like Pandas, Scikit-learn, Matplotlib, and Seaborn.
+# 🎬 IMDb Movie Rating Prediction with Python 🐍
 
-## 📝 Project Overview
+This project predicts the IMDb rating for movies listed in the "IMDb Movies India.csv" dataset using features like Genre, Director, and Actors. It employs a Linear Regression model built with Python and Scikit-learn, intended to be run as a standard Python script.
 
-The Jupyter Notebook (`Movie Rating Prediction with Python.ipynb`) demonstrates a workflow for predicting movie ratings:
+## 📝 Project Description
 
-1.  **Data Loading & Exploration:** Loads the dataset (`IMDb Movies India.csv` with ISO-8859-1 encoding) and performs initial exploration using `info()`, `describe()`, and checks for missing values.
-2.  **Data Preprocessing:**
-    *   Handles missing values by dropping specific columns with high null counts (`Duration`, `Year`, `Votes`, `Director`, `Actor 1`, `Actor 2`, `Actor 3`) and then dropping rows with any remaining missing values.
-    *   Processes the `Genre` column by splitting comma-separated genres and exploding them into separate rows for analysis and feature creation.
-3.  **Feature Engineering:** Uses `TfidfVectorizer` on the processed `Genre` column to create numerical features representing genre information.
-4.  **Model Training:**
-    *   Splits the data into training and testing sets.
-    *   Trains a `LinearRegression` model using the TF-IDF genre features to predict the `Rating`.
-5.  **Model Evaluation:** Evaluates the model's performance using Mean Absolute Error (MAE), Mean Squared Error (MSE), and R-squared (R2) score.
-6.  **Visualization:** Includes visualizations like:
-    *   Histograms and distribution plots for the `Rating`.
-    *   Bar plots showing the top genres (based on the processed data).
-    *   *(Note: Visualizations for top directors/actors are present in the code but might rely on columns dropped earlier in the typical notebook flow).*
-7.  **Prediction Function:** Provides a function (`predict_movie_rating`) that takes a movie name as input, retrieves its genre(s), transforms them using the trained TF-IDF vectorizer, and predicts the rating using the trained Linear Regression model.
+This Python script (`your_script_name.py` - *rename as needed*) performs the following steps when executed:
+
+1.  **Loads Data:** Reads the `IMDb Movies India.csv` dataset using Pandas (with `ISO-8859-1` encoding).
+2.  **Initial Display:** Prints the first few rows (`head()`) and a summary of missing values (`isnull().sum()`) to the terminal.
+3.  **Preprocessing:**
+    *   Handles missing values by dropping rows with any nulls (`dropna()`). **Caution:** This might significantly reduce dataset size.
+    *   Selects specific features: `Genre`, `Director`, `Actor 1`, `Actor 2`, `Actor 3`.
+    *   Applies **One-Hot Encoding** to these categorical features using `pd.get_dummies()`.
+4.  **Data Splitting:** Splits the encoded data and target variable (`Rating`) into training and testing sets.
+5.  **Feature Scaling:** Applies `StandardScaler` to scale the encoded features.
+6.  **Model Training:** Trains a `LinearRegression` model on the scaled training data.
+7.  **Prediction & Evaluation:**
+    *   Makes predictions on the scaled test set.
+    *   Calculates and **prints** the Mean Squared Error (MSE) and R-squared (R2) score to the terminal.
+8.  **Example Prediction:** Includes an example demonstrating how to prepare data for and predict the rating of a hypothetical new movie, printing the result to the terminal. *(Note: Requires manually constructing the one-hot encoded input for the new movie)*.
 
 ## 💾 Dataset
 
-*   **File:** `IMDb Movies India.csv` (Included in the repository)
-*   **Source:** Likely sourced from Kaggle or similar platforms.
-*   **Encoding:** Loaded using `encoding='ISO-8859-1'`.
-*   **Content:** Contains information about Indian movies, including Name, Year, Duration, Genre, Rating, Votes, Director, and Actors.
+*   **File:** `IMDb Movies India.csv` (Needs to be in the same directory as the script or provide the full path).
+*   **Encoding:** The script uses `encoding='ISO-8859-1'`.
+*   **Preprocessing Note:** Rows containing *any* missing values are dropped.
 
-## ✨ Features & Target
+## ✨ Features Used
 
-*   **Input Features (Derived):** TF-IDF vectors generated from the movie `Genre` column (after cleaning and processing).
-*   **Target Variable:** `Rating` (Numerical IMDb rating).
+*   **Input Features:** `Genre`, `Director`, `Actor 1`, `Actor 2`, `Actor 3` (transformed via One-Hot Encoding).
+*   **Target Variable:** `Rating` (IMDb Rating).
 
 ## ⚙️ Technologies & Libraries
 
 *   Python 3.x
-*   Jupyter Notebook
 *   Pandas
 *   NumPy
-*   Scikit-learn (`train_test_split`, `LinearRegression`, `TfidfVectorizer`, `mean_absolute_error`, `mean_squared_error`, `r2_score`)
-*   Matplotlib
-*   Seaborn
+*   Scikit-learn (`train_test_split`, `OneHotEncoder` *(implicitly via get_dummies)*, `StandardScaler`, `LinearRegression`, `mean_squared_error`, `r2_score`)
 
-## 🛠️ Setup & Installation
+## 🛠️ Setup & Installation (using VS Code)
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/PrabuMS07/MOVIE-RATING-PREDICTION-WITH-PYTHON.git
-    cd MOVIE-RATING-PREDICTION-WITH-PYTHON
-    ```
-2.  **Set up a Python environment (Recommended):**
+1.  **Clone/Download:** Get the project files (Python script and `IMDb Movies India.csv`).
+2.  **Open Folder:** Open the project folder in Visual Studio Code (`File` > `Open Folder...`).
+3.  **Python Interpreter:** Ensure you have a Python 3 interpreter selected in VS Code (Check the bottom status bar). If not, install Python and select it.
+4.  **Terminal:** Open the integrated terminal in VS Code (`View` > `Terminal` or `Ctrl + \``).
+5.  **(Optional but Recommended) Create Virtual Environment:**
     ```bash
     python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    source venv/bin/activate  # On Windows PowerShell: .\venv\Scripts\Activate.ps1 or cmd: venv\Scripts\activate.bat
     ```
-3.  **Install required libraries:**
+6.  **Install Dependencies:** Create a `requirements.txt` file with the content below:
+    ```txt
+    pandas
+    numpy
+    scikit-learn
+    ```
+    Then run:
     ```bash
-    pip install pandas numpy scikit-learn matplotlib seaborn jupyterlab notebook
+    pip install -r requirements.txt
     ```
-    
+7.  **Dataset:** Make sure the `IMDb Movies India.csv` file is located in the same folder as your Python script.
 
-## ▶️ Usage
+## ▶️ Usage (within VS Code)
 
-1.  Ensure you have completed the Setup steps and activated your virtual environment.
-2.  Start Jupyter Lab or Jupyter Notebook:
-    ```bash
-    jupyter lab
-    ```
-    or
-    ```bash
-    jupyter notebook
-    ```
-3.  Your browser should open the Jupyter interface. Navigate to and open the `Movie Rating Prediction with Python.ipynb` file.
-4.  Run the cells in the notebook sequentially (e.g., using `Shift + Enter` or the "Run" button) to execute the code, see the analysis, visualizations, model training, evaluation, and predictions.
+1.  Ensure you have completed the Setup steps (and activated the virtual environment if you created one).
+2.  Open your Python script file (e.g., `movie_rating_predictor.py`) in the VS Code editor.
+3.  Run the script using one of these methods:
+    *   **From the Terminal:** Type `python your_script_name.py` and press Enter.
+    *   **Using VS Code's Run Button:** Click the "Run Python File" button (usually a green triangle) in the top-right corner of the editor (requires the Python extension for VS Code).
+    *   **Right-Click:** Right-click within the editor and select "Run Python File in Terminal".
+
+4.  **Output:** Observe the output printed directly **in the VS Code Terminal window**. This will include:
+    *   The `head()` of the DataFrame.
+    *   The count of null values per column.
+    *   The calculated `Mean Squared Error`.
+    *   The calculated `R-squared` score.
+    *   The `Predicted Rating` for the example new movie.
 
 ## 📊 Evaluation Metrics
 
-The model's performance is evaluated using:
+*   **Mean Squared Error (MSE):** Printed to the terminal. Lower is better.
+*   **R-squared (R2) Score:** Printed to the terminal. Closer to 1 indicates a better fit by the model based on the selected features.
 
-*   **Mean Absolute Error (MAE):** Average absolute difference between actual and predicted ratings.
-*   **Mean Squared Error (MSE):** Average squared difference between actual and predicted ratings.
-*   **R-squared (R2) Score:** Proportion of variance in the rating explained by the genre features.
+## 💡 Potential Future Improvements (Modify the Script)
 
-## 💡 Potential Considerations
-
-*   **Feature Scope:** The current model primarily relies on TF-IDF vectors derived from the `Genre`. The notebook initially drops Director and Actor columns due to missing values, limiting the features used for the final prediction model compared to some other approaches.
-*   **Missing Value Strategy:** Dropping columns and rows with missing data simplifies the process but significantly reduces the dataset size and potentially removes valuable information. Alternative imputation strategies could be explored.
-*   **Model Complexity:** Linear Regression is used. Exploring more complex models (e.g., Random Forest, Gradient Boosting) might yield different results, especially if more features were incorporated.
+*   **Add Visualizations:** Use `matplotlib` or `seaborn` to create plots (histograms, scatter plots). You'll need to add `import matplotlib.pyplot as plt` and use `plt.show()` at the end of the script to display plots in separate windows, or `plt.savefig()` to save them as image files. Remember to add `matplotlib` and `seaborn` to your `requirements.txt` if you use them.
+*   **Improve Missing Value Handling:** Implement imputation instead of `dropna()`.
+*   **Alternative Encoding:** For features like Director/Actors with many unique values, explore Target Encoding or HashingVectorizer instead of One-Hot Encoding to manage dimensionality.
+*   **Different Models:** Experiment with other Scikit-learn regressors.
+*   **Refine Prediction Input:** Create a function that takes raw movie details (genre, director, actors) and handles the encoding/scaling internally, making prediction easier.
 
 ---
